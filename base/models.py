@@ -18,6 +18,7 @@ class Car(models.Model):
     description = models.TextField(blank=True, null=True)
     sold = models.BooleanField(default=False)
     sold_to = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    address = models.TextField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
