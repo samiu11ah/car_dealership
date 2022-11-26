@@ -1,0 +1,27 @@
+{% extends 'base/layout.html' %}
+{% block body %}
+<div class="container">
+
+    <h1>Login</h1>
+    <div class="row mt-5">
+        <div class="col-sm-12 col-md-6">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="usernameInput" class="form-label">Username</label>
+                    <input required name="username" type="text" class="form-control" id="usernameInput" aria-describedby="usernameHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input required name="password" type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <a class="link-secondary" href="{% url 'register' %}">Register</a> <br>
+                <button type="submit" class="btn btn-secondary form-control mt-2">Login</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock body %}
