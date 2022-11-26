@@ -1,0 +1,51 @@
+{% extends 'base/layout.html' %}
+
+
+
+{% block extra_head %}
+<script src="https://www.google.com/recaptcha/api.js"></script>
+{% endblock extra_head %}
+
+{% block body %}
+<div class="container">
+
+    <h1>Register</h1>
+    <div class="row mt-5">
+        <div class="col-sm-12 col-md-6">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">First Name</label>
+                            <input required name="first_name" type="text" class="form-control" id="nameInput">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Last Name</label>
+                            <input required name="last_name" type="text" class="form-control" id="nameInput">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input required name="email" type="email" class="form-control" id="emailInput">
+                </div>
+                <div class="mb-3">
+                    <label for="messageInput" class="form-label">Message</label>
+                    <textarea class="form-control" required name="message" id="" cols="30" rows="10" id="messageInput"></textarea>
+                </div>
+
+                <div class="g-recaptcha" data-sitekey="{{RECAPTCHA_SITE_KEY}}"></div>
+
+                <button type="submit" class="btn btn-secondary form-control mt-2">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+
+
+{% endblock body %}
