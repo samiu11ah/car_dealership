@@ -26,3 +26,16 @@ class Car(models.Model):
 
     def __str__(self):
         return f'id: {self.id}, make: {self.make}, model: {self.model}, year: {self.model_year}'
+
+class Inquiry(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100, unique=False)
+    message = models.TextField()
+
+    class Meta:
+        verbose_name_plural = "Inquiries"
+
+
+    def __str__(self):
+        return f'{self.email}: {self.message.splitlines()[0]}'
