@@ -12,6 +12,10 @@ import json
 def index(request):
     return render(request, 'base/index.html')
 
+
+def car_details(request, id):
+    return render(request, 'base/car_details.html')
+
 def cars(request):
     context = {}
     context['cars'] = Car.objects.all()

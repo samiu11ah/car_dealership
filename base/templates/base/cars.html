@@ -1,5 +1,6 @@
 {% include 'base/layout.html' %}
 
+
 {% block body %}
 <div class="container">
 
@@ -7,26 +8,24 @@
     <div class="row row-cols-1 row-cols-md-2 g-5 mt-5">
         {% for car in cars %}
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100 shadow">
                 <img src="{{car.image.url}}" class="card-img-top" alt="car image" style="width: auto; height: 35vh; object-fit: cover;">
-            
+
               
               <div class="card-body">
                 <h5 class="card-title">Make: {{car.make}}</h5>
                 <h6 class="card-title">Model: {{car.model}}</h6>
-                <p class="card-text">{{car.description | truncatechars:200}}</p>
-                <p class="card-text">Address: <strong>{{car.address}}</strong></p>
+                <p class="card-text">{{car.description | truncatechars:140}} </p>
                 <p class="card-text"><small class="text-muted">{{car.uploaded_at | timesince}} ago</small></p>
               </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Condition: <strong>{{ car.condition }} - {{car.condition_rating}}/10</strong></li>
                 <li class="list-group-item">Year: <strong>{{ car.model_year }}</strong></li>
                 <li class="list-group-item">Price: <strong>${{ car.price }}</strong></li>
             </ul>
+
             <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>            
+              <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#car_{{car.id}}">View</a>          
+            </div>
             </div>
           </div>
         {% empty %}
@@ -35,5 +34,70 @@
         {% endfor %}
     </div>
 </div>
+
+
+{% comment %} Car Details : Modals {% endcomment %}
+{% for car in cars %}
+<div class="modal py-5" id="car_{{car.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{car.make}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <img src="{{car.image.url}}" class="img-fluid rounded-start" alt="IMG" style="width: auto; object-fit: cover;">
+              </div>
+              <div class="col-md-6">
+
+                <div class="card-body pl-5">
+
+                  <dl class="row">
+                    <dt class="col-sm-3">Make</dt>
+                    <dd class="col-sm-9">{{ car.make }}</dd>
+
+                    <dt class="col-sm-3">Model</dt>
+                    <dd class="col-sm-9">{{ car.model }}</dd>
+
+                    <dt class="col-sm-3">Model Year</dt>
+                    <dd class="col-sm-9">{{ car.model_year }}</dd>
+
+                    <dt class="col-sm-3">Condition</dt>
+                    <dd class="col-sm-9">{{ car.condition }}</dd>
+
+                    <dt class="col-sm-3">Condition Rating</dt>
+                    <dd class="col-sm-9">{{ car.condition_rating }}/10</dd>
+
+                    <dt class="col-sm-3">Description</dt>
+                    <dd class="col-sm-9">{{ car.description | linebreaks }}</dd>
+
+
+                    <dt class="col-sm-3">Address</dt>
+                    <dd class="col-sm-9">{{ car.address }}</dd>
+
+                    <dt class="col-sm-3">Uploaded at</dt>
+                    <dd class="col-sm-9">{{ car.uploaded_at }}</dd>
+                    <dt class="col-sm-3">Modified at</dt>
+                    <dd class="col-sm-9">{{ car.modified_at }}</dd>
+                    <dt class="col-sm-3">Price</dt>
+                    <dd class="col-sm-9">${{ car.price }}</dd>
+                  </dl>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+</div>
+{% endfor %}
 
 {% endblock body %}
