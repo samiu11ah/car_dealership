@@ -1,6 +1,12 @@
 {% include 'base/layout.html' %}
 
 
+{% block extra_head %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+{% endblock extra_head %}
+
+
 {% block body %}
 <div class="container">
 
@@ -24,7 +30,7 @@
             </ul>
 
             <div class="card-body">
-              <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#car_{{car.id}}">View</a>          
+              <a href="#" class="btn btn-sm btn-secondary stretched-link" data-bs-toggle="modal" data-bs-target="#car_{{car.id}}">View</a>          
             </div>
             </div>
           </div>
@@ -38,8 +44,8 @@
 
 {% comment %} Car Details : Modals {% endcomment %}
 {% for car in cars %}
-<div class="modal py-5" id="car_{{car.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+<div class="modal animate__animated animate__fadeIn animate__faster py-5" id="car_{{car.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-xl modal-dialog-centered" >
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">{{car.make}}</h5>
@@ -57,35 +63,40 @@
                 <div class="card-body pl-5">
 
                   <dl class="row">
-                    <dt class="col-sm-3">Make</dt>
-                    <dd class="col-sm-9">{{ car.make }}</dd>
+                    <dt class="col-sm-4">Make</dt>
+                    <dd class="col-sm-8">{{ car.make }}</dd>
 
-                    <dt class="col-sm-3">Model</dt>
-                    <dd class="col-sm-9">{{ car.model }}</dd>
+                    <dt class="col-sm-4">Model</dt>
+                    <dd class="col-sm-8">{{ car.model }}</dd>
 
-                    <dt class="col-sm-3">Model Year</dt>
-                    <dd class="col-sm-9">{{ car.model_year }}</dd>
+                    <dt class="col-sm-4">Model Year</dt>
+                    <dd class="col-sm-8">{{ car.model_year }}</dd>
 
-                    <dt class="col-sm-3">Condition</dt>
-                    <dd class="col-sm-9">{{ car.condition }}</dd>
+                    <dt class="col-sm-4">Condition</dt>
+                    <dd class="col-sm-8">{{ car.condition }}</dd>
 
-                    <dt class="col-sm-3">Condition Rating</dt>
-                    <dd class="col-sm-9">{{ car.condition_rating }}/10</dd>
+                    <dt class="col-sm-4">Condition Rating</dt>
+                    <dd class="col-sm-8">{{ car.condition_rating }}/10</dd>
 
-                    <dt class="col-sm-3">Description</dt>
-                    <dd class="col-sm-9">{{ car.description | linebreaks }}</dd>
+                    <dt class="col-sm-4">Description</dt>
+                    <dd class="col-sm-8">{{ car.description | linebreaks }}</dd>
 
 
-                    <dt class="col-sm-3">Address</dt>
-                    <dd class="col-sm-9">{{ car.address }}</dd>
+                    <dt class="col-sm-4">Address</dt>
+                    <dd class="col-sm-8">{{ car.address }}</dd>
 
-                    <dt class="col-sm-3">Uploaded at</dt>
-                    <dd class="col-sm-9">{{ car.uploaded_at }}</dd>
-                    <dt class="col-sm-3">Modified at</dt>
-                    <dd class="col-sm-9">{{ car.modified_at }}</dd>
-                    <dt class="col-sm-3">Price</dt>
-                    <dd class="col-sm-9">${{ car.price }}</dd>
+                    <dt class="col-sm-4">Uploaded at</dt>
+                    <dd class="col-sm-8">{{ car.uploaded_at }}</dd>
+                    <dt class="col-sm-4">Modified at</dt>
+                    <dd class="col-sm-8">{{ car.modified_at }}</dd>
+                    <dt class="col-sm-4">Price</dt>
+                    <dd class="col-sm-8">${{ car.price }}</dd>
                   </dl>
+
+                  <a href="#" class="btn btn-dark form-control">
+                    Book Ride
+                    (login required)
+                  </a>
 
                 </div>
 

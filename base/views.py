@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Car, Inquiry
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.conf import settings
+from .models import Car, Inquiry, RideRecord
 import requests
 import json
 # Create your views here.
@@ -19,6 +19,7 @@ def car_details(request, id):
 def cars(request):
     context = {}
     context['cars'] = Car.objects.all()
+    # context['cars'] = RideRecord.objects.filter(user=request.user)
     return render(request, 'base/cars.html', context)
 
 def register(request):
