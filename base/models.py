@@ -28,6 +28,18 @@ class Car(models.Model):
     def __str__(self):
         return f'id: {self.id}, make: {self.make}, model: {self.model}, year: {self.model_year}'
 
+class RideRecord(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ride_datetime = models.DateTimeField()
+    booking_datetime = models.DateTimeField(auto_now_add=True)
+    spot = models.CharField(max_length=200)
+    accepted = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f'{self.user.username} - {self.car.model} - {self.datetime}'
+
 class Inquiry(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
