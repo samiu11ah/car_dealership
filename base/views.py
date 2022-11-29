@@ -7,17 +7,40 @@ from django.conf import settings
 from .models import Car, Inquiry, RideRecord
 import requests
 import json
+from datetime import datetime
 # Create your views here.
 
 def index(request):
     return render(request, 'base/index.html')
 
+def my_rides(request):
+    context = {}
+    context['my_rides'] = RideRecord.objects.filter(user=request.user)
+    return render(request, 'base/my_rides.html', context)
 
-def car_details(request, id):
-    return render(request, 'base/car_details.html')
+@login_required
+def book_ride(request, car_id):
+    context = {}
+    car = Car.objects.get(id=car_id)
+
+    if request.method == "POST":
+        ride_datetime = request.POST.get('ride_date')
+        # ride_time = request.POST.get('ride_time')
+        ride_spot = request.POST.get('ride_spot')
+        # 2022-11-30 12:12
+
+        ride_record = RideRecord(car=car, user=request.user, ride_datetime=ride_datetime, spot=ride_spot)
+        ride_record.save()
+        messages.success(request, 'Booked ride')
+        print(ride_datetime)
+        # return redirect('my_rides')
+
+    context['car'] = car
+    return render(request, 'base/book_ride.html', context)
 
 def cars(request):
     context = {}
+
     context['cars'] = Car.objects.all()
     # context['cars'] = RideRecord.objects.filter(user=request.user)
     return render(request, 'base/cars.html', context)
@@ -40,14 +63,22 @@ def register(request):
                 u = authenticate(username=username, password=password1)
                 if u is not None:
                     login(request, u)
-                    messages.success(request, f'User created and logged in as {user.username}')
-                    return redirect('index')
+                    if 'next' in request.GET:
+                        messages.success(request, f'User created and logged in as {u.username}, please proceed with booking car ride.')
+                        return redirect(request.GET.get('next'))
+                    else:
+                        messages.success(request, f'User created and logged in as {user.username}')
+                        return redirect('index')
+                        
             except:
                 messages.error(request, 'Something went wrong, try again')
                 return redirect('register')
         else:
             messages.error(request, 'Passwords not matching, retry')
             return redirect('register')
+
+    if 'next' in request.GET:
+        messages.success(request, f'After creating account, You will be redirected to booking car ride page.')
 
     return render(request, 'base/register.html')
 
@@ -56,16 +87,25 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        print(username)
-        print(password)
-        print(user)
         if user is not None:
             login(request, user)
-            messages.success(request, f'Logged in as {user.username}')
-            return redirect('index')
+            if 'next' in request.GET:
+                messages.success(request, f'Logged in as {user.username}, please proceed with booking car ride.')
+                return redirect(request.GET.get('next'))
+            else:
+                messages.success(request, f'Logged in as {user.username}')
+                return redirect('index')
         else:
             messages.error(request, 'Something went wrong')
+            if 'next' in request.GET:
+                next_url = request.GET.get('next')
+                return redirect(f'/user_login/?next={next_url}')
             return redirect('user_login')
+
+
+    if 'next' in request.GET:
+        messages.success(request, f'After login, You will be redirected to booking car ride page.')
+
     return render(request, 'base/user_login.html')
 
 def user_logout(request):
