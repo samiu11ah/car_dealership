@@ -1,10 +1,6 @@
 {% include 'base/layout.html' %}
 
 
-{% block extra_head %}
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-{% endblock extra_head %}
 
 
 {% block body %}
@@ -44,11 +40,11 @@
 
 {% comment %} Car Details : Modals {% endcomment %}
 {% for car in cars %}
-<div class="modal animate__animated animate__fadeIn animate__faster py-5" id="car_{{car.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+<div class="modal animate__animated animate__fadeIn animate__faster py-5" id="car_{{car.id}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" >
     <div class="modal-dialog modal-xl modal-dialog-centered" >
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{car.make}}</h5>
+          <h5 class="modal-title" id="ModalLabel">{{car.make}} - {{car.model}}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -93,9 +89,13 @@
                     <dd class="col-sm-8">${{ car.price }}</dd>
                   </dl>
 
-                  <a href="#" class="btn btn-dark form-control">
+                  <a href="{% url 'book_ride' car.id %}" class="btn btn-dark form-control">
                     Book Ride
-                    (login required)
+                    {% if request.user.is_authenticated %}
+                    (as {{request.user.username}})
+                    {% else %}
+                    (account required)
+                    {% endif %}
                   </a>
 
                 </div>

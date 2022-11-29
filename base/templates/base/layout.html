@@ -11,6 +11,8 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Nunito:ital,wght@1,700&family=Sono:wght@600&display=swap');
     </style> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
 
   </head>
   <body>
@@ -31,7 +33,7 @@
               </li>
               {% if request.user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="#">My Rides</a>
+                <a class="nav-link" href="{% url 'my_rides' %}">My Rides</a>
               </li>
               {% endif %}
               <li class="nav-item">
@@ -45,7 +47,7 @@
                 <a class="nav-link mx-5" href="#">Welcome, {{request.user.username}}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link px-4 py-2 rounded-pill text-bg-dark" href="{% url 'user_logout' %}">Logout</a>
+                <a class="nav-link px-4 py-1 rounded-pill text-bg-dark" href="{% url 'user_logout' %}">Logout</a>
               </li>
               {% else %}
               <li class="nav-item">
@@ -65,9 +67,9 @@
         <br>
         <div class="container">
           {% for message in messages %}
-          <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          <div class="alert {{ message.tags }} alert-dismissible animate__animated animate__headShake py-1" role="alert">
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         {% endfor %}
         </div>
