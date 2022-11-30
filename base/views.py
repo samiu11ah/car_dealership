@@ -7,7 +7,6 @@ from django.conf import settings
 from .models import Car, Inquiry, RideRecord
 import requests
 import json
-from datetime import datetime
 # Create your views here.
 
 def index(request):
@@ -24,10 +23,10 @@ def book_ride(request, car_id):
     car = Car.objects.get(id=car_id)
 
     if request.method == "POST":
-        ride_datetime = request.POST.get('ride_date')
-        # ride_time = request.POST.get('ride_time')
+        ride_datetime = request.POST.get('ride_datetime')
         ride_spot = request.POST.get('ride_spot')
         # 2022-11-30 12:12
+
 
         ride_record = RideRecord(car=car, user=request.user, ride_datetime=ride_datetime, spot=ride_spot)
         ride_record.save()
@@ -40,9 +39,53 @@ def book_ride(request, car_id):
 
 def cars(request):
     context = {}
+    cars = Car.objects.all()
+    all_makes = cars.values_list('make', flat=True)
+    distinct_makes = set(all_makes)
+    if request.method == "POST":
+        filter_make = request.POST.get('filter_make')
+        filter_price_low = request.POST.get('filter_price_low')
+        filter_price_high = request.POST.get('filter_price_high')
+        sort_radio = request.POST.get('sort_radio')
+        filter_msg = ''
 
-    context['cars'] = Car.objects.all()
-    # context['cars'] = RideRecord.objects.filter(user=request.user)
+        if filter_make and filter_make in distinct_makes:
+            cars = cars.filter(make=filter_make)
+            filter_msg += f'make={filter_make}'
+        elif filter_make not in distinct_makes and filter_make != "":
+            filter_msg += f'make={filter_make} Not found'
+        if filter_price_low:
+            cars = cars.filter(price__gte=filter_price_low)
+            filter_msg += f', starting price={filter_price_low}'
+            
+        if filter_price_high:
+            cars = cars.filter(price__lte=filter_price_high)
+            filter_msg += f', highest price={filter_price_high}'
+
+        if filter_msg != '':
+            filter_msg = f'Applied filters: {filter_msg}; '
+
+        if sort_radio == 'low_high':
+            cars = cars.order_by('price')
+            filter_msg += 'Sort=Low-High'
+
+        else:
+            cars = cars.order_by('-price')
+            filter_msg += 'Sort=High-Low'
+        
+        messages.info(request, filter_msg)
+
+        
+
+        
+        
+        
+        # print(filter_make, filter_price_low, filter_price_high, sort_radio)
+
+
+    context['cars'] = cars
+
+    context['available_makes'] = distinct_makes
     return render(request, 'base/cars.html', context)
 
 def register(request):
