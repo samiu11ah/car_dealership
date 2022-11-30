@@ -7,7 +7,7 @@
     <table class="table table-hover">
         <thead>
             <th>ID</th>
-            <th>car</th>
+            <th>Car</th>
             <th>Date and Time</th>
             <th>Booking Date and Time</th>
             <th>Spot</th>
@@ -17,11 +17,15 @@
             {% for ride in my_rides %}
             <tr>
                 <td>{{ ride.id }}</td>
-                <td>{{ ride.car.make }} - {{ ride.car.model }}</td>
+                <td><a href="{% url 'book_ride' ride.car.id %}">{{ ride.car.make }} - {{ ride.car.model }}</a></td>
                 <td>{{ ride.ride_datetime }}</td>
                 <td>{{ ride.booking_datetime }}</td>
                 <td>{{ ride.spot }}</td>
-                <td>{{ ride.accepted }}</td>
+                {% if ride.accepted %}
+                <td>Accepted</td>
+                {% else %}
+                <td>Not Accepted yet</td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

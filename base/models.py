@@ -34,11 +34,11 @@ class RideRecord(models.Model):
     ride_datetime = models.DateTimeField()
     booking_datetime = models.DateTimeField(auto_now_add=True)
     spot = models.CharField(max_length=200)
-    accepted = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=True)
 
 
     def __str__(self):
-        return f'{self.user.username} - {self.car.model} - {self.datetime}'
+        return f'{self.user.username} - {self.car.model} - {self.ride_datetime}'
 
 class Inquiry(models.Model):
     first_name = models.CharField(max_length=100)
@@ -47,7 +47,7 @@ class Inquiry(models.Model):
     message = models.TextField()
 
     class Meta:
-        verbose_name_plural = "Inquiries"
+        verbose_name_plural = "Enquiries"
 
 
     def __str__(self):

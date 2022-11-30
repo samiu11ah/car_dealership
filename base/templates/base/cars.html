@@ -5,15 +5,74 @@
 
 {% block body %}
 <div class="container">
+  <h1>Cars</h1>
 
-    <h1>Cars</h1>
-    <div class="row row-cols-1 row-cols-md-2 g-5 mt-5">
+{% comment %} Filters {% endcomment %}
+    <form class="row border border-light shadow-sm p-2" action="" method="POST">
+      {% csrf_token %}
+      <h5>Filter cars</h5>
+      <div class="col-sm-12 col-md-3 mt-2">
+        <label for="">Make</label>
+        <input type="text" name="filter_make" class="form-control form-control-sm" list="filter_make_list" placeholder="Type and select from available makes" autocomplete="off">
+
+        <datalist id="filter_make_list">
+          {% for obj in available_makes %}
+          <option value="{{ obj }}">
+          {% endfor %}
+        </datalist>
+
+      </div>
+
+
+      <div class="col-sm-12 col-md-3 mt-2">
+        <div class="row">
+          <div class="col-6">
+            <label for="">Lowest Price</label>
+            <input type="number" name="filter_price_low" class="form-control form-control-sm">
+          </div>
+          <div class="col-6">
+            <label for="">Higest Price</label>
+            <input type="number" name="filter_price_high" class="form-control form-control-sm">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3 mt-2">
+        <label for="">Sort by Price</label> <br>
+        
+        <div class="form-check form-check-inline">
+          <input class="form-check-input mt-2" type="radio" name="sort_radio" id="sort_radio1"  value="high_low">
+          <label class="form-check-label" for="sort_radio1">
+            <i class="bi bi-sort-numeric-up-alt fs-4"></i>
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input mt-2" type="radio" name="sort_radio" id="sort_radio2" value="low_high" checked>
+          <label class="form-check-label" for="sort_radio2">
+            
+            <i class="bi bi-sort-numeric-down fs-4"></i>
+          </label>
+        </div>
+
+      </div>
+      <div class="col-sm-12 col-md-3 mt-2">
+        <label for=""></label>
+        <button type="submit" class="btn btn-sm btn-outline-secondary form-control">Filter & sort</button>
+      </div>
+    </form>
+
+
+
+    <div class="row row-cols-1 row-cols-md-2 g-5 mt-3">
         {% for car in cars %}
         <div class="col">
-            <div class="card h-100 shadow">
+            <div class="card h-100 shadow-sm">
                 <img src="{{car.image.url}}" class="card-img-top" alt="car image" style="width: auto; height: 35vh; object-fit: cover;">
-
-              
+                {% if car.sold %}
+                <div class="card-img-overlay">
+                  <h5 class="card-title text-bg-dark opacity-75 p-2 mt-5 text-center">Sold</h5>
+                </div>
+                {% endif %}
+            
               <div class="card-body">
                 <h5 class="card-title">Make: {{car.make}}</h5>
                 <h6 class="card-title">Model: {{car.model}}</h6>
@@ -89,13 +148,18 @@
                     <dd class="col-sm-8">${{ car.price }}</dd>
                   </dl>
 
-                  <a href="{% url 'book_ride' car.id %}" class="btn btn-dark form-control">
+                  <a href="{% url 'book_ride' car.id %}" class="btn btn-dark form-control {% if car.sold %} disabled {% endif %}">
+                    {% if car.sold %}
+                    Sold out
+                    {% else %}
                     Book Ride
                     {% if request.user.is_authenticated %}
                     (as {{request.user.username}})
                     {% else %}
                     (account required)
                     {% endif %}
+                    {% endif %}
+
                   </a>
 
                 </div>

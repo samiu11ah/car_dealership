@@ -2,74 +2,87 @@
 
 {% block body %}
 <div class="container">
-    <h1>Book Ride</h1>
+    <h1>Details - Book Ride</h1>
     
     <div class="card">
         <div class="card-body pl-5">
 
-            <dl class="row">
-              <dt class="col-sm-6 col-md-2">Make</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.make }}</dd>
-
-              <dt class="col-sm-6 col-md-2">Model</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.model }}</dd>
-
-              <dt class="col-sm-6 col-md-2">Model Year</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.model_year }}</dd>
-
-              <dt class="col-sm-6 col-md-2">Condition</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.condition }}</dd>
-
-              <dt class="col-sm-6 col-md-2">Condition Rating</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.condition_rating }}/10</dd>
-
-              <dt class="col-sm-6 col-md-2">Description</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.description | linebreaks }}</dd>
-
-
-              <dt class="col-sm-6 col-md-2">Address</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.address }}</dd>
-
-              <dt class="col-sm-6 col-md-2">Uploaded at</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.uploaded_at }}</dd>
-              <dt class="col-sm-6 col-md-2">Modified at</dt>
-              <dd class="col-sm-6 col-md-9">{{ car.modified_at }}</dd>
-              <dt class="col-sm-6 col-md-2">Price</dt>
-              <dd class="col-sm-6 col-md-9">${{ car.price }}</dd>
-              
-              
-              <hr>
-              <h4>Book Ride</h4>
-
-              <form action="" method="post">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-sm-12 col-md-2 mt-2">Date</div>
-                    <div class="col-sm-12 col-md-9 mt-2"><input required type="datetime-local" name="ride_datetime" class="form-control"></div>
-                    {% comment %} <div class="col-sm-12 col-md-2 mt-2">Time</div>
-                    <div class="col-sm-12 col-md-9 mt-2"><input required type="time" name="ride_time" class="form-control"></div> {% endcomment %}
-                    <div class="col-sm-12 col-md-2 mt-2">Spot</div>
-                    <div class="col-sm-12 col-md-9 mt-2"><input required type="text" name="ride_spot" class="form-control"></div>
-
-
-
-
-                <div class="col-sm-12 col-md-2 mt-3">
-                    <a href="{% url 'cars' %}" class="btn btn-secondary form-control col-sm-2">Cancel</a>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <img src="{{car.image.url}}" class="img-fluid rounded-start" alt="IMG" style="width: auto; object-fit: cover;">
                 </div>
+                <div class="col-sm-12 col-md-6">
 
-                <div class="col-sm-12 col-md-9 mt-3">
-                    <button type="submit" class="btn btn-dark form-control col-sm-9">Confirm</button>
+                    <dl class="row">
+                        <dt class="col-sm-6 col-md-2">Make</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.make }}</dd>
+          
+                        <dt class="col-sm-6 col-md-2">Model</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.model }}</dd>
+          
+                        <dt class="col-sm-6 col-md-2">Model Year</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.model_year }}</dd>
+          
+                        <dt class="col-sm-6 col-md-2">Condition</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.condition }}</dd>
+          
+                        <dt class="col-sm-6 col-md-2">Condition Rating</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.condition_rating }}/10</dd>
+          
+                        <dt class="col-sm-6 col-md-2">Description</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.description | linebreaks }}</dd>
+          
+          
+                        <dt class="col-sm-6 col-md-2">Address</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.address }}</dd>
+          
+                        <dt class="col-sm-6 col-md-2">Uploaded at</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.uploaded_at }}</dd>
+                        <dt class="col-sm-6 col-md-2">Modified at</dt>
+                        <dd class="col-sm-6 col-md-9">{{ car.modified_at }}</dd>
+                        <dt class="col-sm-6 col-md-2">Price</dt>
+                        <dd class="col-sm-6 col-md-9">${{ car.price }}</dd>
+                        
+                        
+                        <hr>
+          
+                        
+          
+                        <h4>Book Ride</h4>
+          
+                        <form action="" method="post">
+                          {% csrf_token %}
+                          <div class="row">
+                              <div class="col-sm-12 col-md-2 mt-2">Date</div>
+                              <div class="col-sm-12 col-md-9 mt-2"><input required type="datetime-local" name="ride_datetime" class="form-control"></div>
+                              {% comment %} <div class="col-sm-12 col-md-2 mt-2">Time</div>
+                              <div class="col-sm-12 col-md-9 mt-2"><input required type="time" name="ride_time" class="form-control"></div> {% endcomment %}
+                              <div class="col-sm-12 col-md-2 mt-2">Spot</div>
+                              <div class="col-sm-12 col-md-9 mt-2"><input required type="text" name="ride_spot" class="form-control"></div>
+          
+          
+          
+          
+                          <div class="col-sm-12 col-md-2 mt-3">
+                              <a href="{% url 'cars' %}" class="btn btn-secondary form-control col-sm-2">Cancel</a>
+                          </div>
+          
+                          <div class="col-sm-12 col-md-9 mt-3">
+                              <button type="submit" class="btn btn-dark form-control col-sm-9">Confirm</button>
+                          </div>
+          
+                          </div>
+          
+          
+                        </form>
+          
+          
+            
+                      </dl>
                 </div>
-
-                </div>
-
-
-              </form>
+            </div>
 
 
-  
-            </dl>
 
         </div>
     </div>
