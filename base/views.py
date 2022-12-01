@@ -12,6 +12,7 @@ import json
 def index(request):
     return render(request, 'base/index.html')
 
+@login_required
 def my_rides(request):
     context = {}
     context['my_rides'] = RideRecord.objects.filter(user=request.user)
