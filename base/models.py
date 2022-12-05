@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Car(models.Model):
-    image = models.ImageField(upload_to='cars/')
+    image = models.ImageField(upload_to='cars/', blank=True, null=True)
     make = models.CharField(max_length=100) # tesla, toyota
     model = models.CharField(max_length=100) # corola
     # addtinal column
@@ -21,6 +21,12 @@ class Car(models.Model):
     address = models.TextField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+    def get_make(self):
+        return self.make
+
+    def get_model(self):
+        return self.model
 
 
 

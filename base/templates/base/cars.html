@@ -66,7 +66,7 @@
         {% for car in cars %}
         <div class="col">
             <div class="card h-100 shadow-sm">
-                <img src="{{car.image.url}}" class="card-img-top" alt="car image" style="width: auto; height: 35vh; object-fit: cover;">
+                <img src="{% if car.image %}{{car.image.url}}{% endif %}" class="card-img-top" alt="car image" style="width: auto; height: 35vh; object-fit: cover;">
                 {% if car.sold %}
                 <div class="card-img-overlay">
                   <h5 class="card-title text-bg-dark opacity-75 p-2 mt-5 text-center">Sold</h5>
@@ -111,7 +111,7 @@
           <div class="card mb-3">
             <div class="row g-0">
               <div class="col-md-6">
-                <img src="{{car.image.url}}" class="img-fluid rounded-start" alt="IMG" style="width: auto; object-fit: cover;">
+                <img src="{% if car.image %}{{car.image.url}}{% endif %}" class="img-fluid rounded-start" alt="IMG" style="width: auto; object-fit: cover;">
               </div>
               <div class="col-md-6">
 
