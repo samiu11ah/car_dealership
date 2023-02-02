@@ -9,6 +9,7 @@ import requests
 import json
 # Create your views here.
 
+# made some changes 
 def index(request):
     return render(request, 'base/index.html')
 
